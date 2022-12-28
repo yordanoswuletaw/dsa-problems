@@ -1,4 +1,8 @@
 def swap_case(s):
+    #easy solution
+    #return s.swapcase()
+
+    # this one works too
     new_s = ''
     for ltr in s:
         if ltr == (ltr.upper()):
