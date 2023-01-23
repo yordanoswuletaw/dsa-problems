@@ -1,26 +1,38 @@
 class Solution:
     def isValidSudoku(self, board: List[List[str]]) -> bool:
 
-        rowTable = {}
-        colTable = {}
+        rowSet = {}
+        colSet = {}
 
         def validateSudoku(rowStart, rowEnd, colStart, colEnd):
 
-            hashMap = {}
+            # hashSet to check for repetition in 3x3 matrix
+            hashSet = set()
             for i in range(rowStart, rowEnd):
                 for j in range(colStart, colEnd):
+
                     if board[i][j] != '.':
-                        if int(board[i][j]) < 0 or int(board[i][j]) > 9 or board[i][j] in hashMap:
+                        # if digit is between 1 - 9 and unique
+                        if int(board[i][j]) < 0 or int(board[i][j]) > 9 or board[i][j] in hashSet:
                             return False 
-                        hashMap[board[i][j]] = 1
-                        if i in rowTable:
-                            rowTable[i].append(board[i][j]) 
+                        hashSet.add(board[i][j])
+                    
+                        # check if digits in row are unique
+                        if i in rowSet:  
+                            if board[i][j] in rowSet[i]:
+                                return False
+                            rowSet[i].add(board[i][j]) 
                         else:
-                            rowTable[i] = list([board[i][j]])
-                        if j in colTable:
-                            colTable[j].append(board[i][j]) 
+                            rowSet[i] = set(board[i][j])
+                        
+                        # check if digits in column are unique
+                        if j in colSet:
+                            if board[i][j] in colSet[j]:
+                                return False
+                            colSet[j].add(board[i][j]) 
                         else:
-                            colTable[j] = list([board[i][j]])
+                            colSet[j] = set(board[i][j])
+                        
                         
             return True
         
@@ -28,11 +40,5 @@ class Solution:
             for j in range(2, 9, 3):
                 if not validateSudoku(i - 2, i + 1, j - 2, j + 1):
                     return False
-        for i in range(9):
-            if i in rowTable:
-                if len(rowTable[i]) != len(set(rowTable[i])):
-                    return False
-            if i in colTable:
-                 if len(colTable[i]) != len(set(colTable[i])):
-                    return False
+      
         return True
