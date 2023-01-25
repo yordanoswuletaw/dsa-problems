@@ -5,7 +5,8 @@ class Solution:
 
         for i in range(len(nums)):
             hashSet.add(nums[i])
-            hashSet.add(self.reverse(nums[i]))
+            if nums[i] > 9:
+                hashSet.add(self.reverse(nums[i]))
         
         return len(hashSet)
         
