@@ -6,20 +6,36 @@
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
 
-        head = tail =  ListNode(None)
-
-        while list1 and list2:
+        # recursion approach
+        if list1 and list2:
             if list1.val <= list2.val:
-                tail.next = ListNode(list1.val)
-                list1 = list1.next
+                list1.next = self.mergeTwoLists(list1.next, list2)
+                return list1
             else:
-                tail.next = ListNode(list2.val)
-                list2 = list2.next
-            tail = tail.next
-        
-        if list1:
-            tail.next = list1
+                list2.next = self.mergeTwoLists(list1, list2.next)
+                return list2  
+        elif list1:
+            return list1
         elif list2:
-            tail.next = list2
+            return list2
+        
+        return None
 
-        return head.next
+        # iteration apporach
+        # head = tail =  ListNode(None)
+        # while list1 and list2:
+        #     if list1.val <= list2.val:
+        #         tail.next = ListNode(list1.val)
+        #         list1 = list1.next
+        #     else:
+        #         tail.next = ListNode(list2.val)
+        #         list2 = list2.next
+        #     tail = tail.next
+        
+        # if list1:
+        #     tail.next = list1
+        # elif list2:
+        #     tail.next = list2
+
+        # return head.next
+       
