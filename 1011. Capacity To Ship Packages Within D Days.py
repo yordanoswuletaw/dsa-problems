@@ -21,8 +21,6 @@ class Solution:
             if weightSum :
                 currDay += 1
             
-            print(mid, currDay, maxWeight)
-            
             if currDay <= days:
                 leastWeight = min(maxWeight, leastWeight) 
                 heigh = mid - 1
