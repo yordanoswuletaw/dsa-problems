@@ -19,9 +19,12 @@ class Solution:
 
         def solve(row, col):
             # validation or base case
+            row = row + col // 9
+            col = col % 9
+
             if row > 8:
                 self.found =  True
-                return
+                return 
 
             for j in range(col, 9):
                 if board[row][j] == '.':
@@ -31,10 +34,9 @@ class Solution:
                             rows[row].add(val)
                             cols[j].add(val)
                             subBoard[(row//3, j//3)].add(val)
-                            if j + 1 > 8:
-                                solve(row + 1, 0)
-                            else:
-                                solve(row, j + 1)
+                    
+                            solve(row, j + 1)
+
                             if not self.found:
                                 board[row][j] = '.'
                                 rows[row].remove(val)
@@ -44,9 +46,10 @@ class Solution:
                     # if no valid digit found    
                     if board[row][j] == '.':
                         return
-            # if we completed the current row with valid digits
+                        
+            # to move to the next row after completing the current row
             if not self.found:
-                solve(row + 1, 0) 
+                solve(row, 9) 
 
         solve(0,0)
             
