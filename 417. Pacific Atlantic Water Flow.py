@@ -19,30 +19,31 @@ class Solution:
                     if inBound(x, y, _x, _y, ocean):
                         ocean.add((_x, _y))
                         queue.append((_x, _y))
-        # pasific
+
         for i in range(m):
+            # pasific
             if (0,i) not in pasific:
                 pasific.add((0,i))
                 queue = deque([(0, i)])
                 bfs(queue, pasific)
-        for i in range(n):
-            if (i, 0) not in pasific:
-                pasific.add((i,0))
-                queue = deque([(i,0)])
-                bfs(queue, pasific)
-                
-        # atlantic
-        for i in range(m):
+            # atlantic
             if (n-1,i) not in atlantic:
                 atlantic.add((n-1,i))
                 queue = deque([(n-1, i)])
                 bfs(queue, atlantic)
 
         for i in range(n):
+            # pasific
+            if (i, 0) not in pasific:
+                pasific.add((i,0))
+                queue = deque([(i,0)])
+                bfs(queue, pasific)
+            # atlantic
             if (i, m-1) not in atlantic:
                 atlantic.add((i,m-1))
                 queue = deque([(i,m-1)])
                 bfs(queue, atlantic)
+
                 
         result = []
         for x in range(n):
