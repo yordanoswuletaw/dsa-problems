@@ -44,13 +44,6 @@ class Solution:
                 queue = deque([(i,m-1)])
                 bfs(queue, atlantic)
 
-                
-        result = []
-        for x in range(n):
-            for y in range(m):
-                if (x, y) in pasific and (x, y) in atlantic:
-                    result.append([x, y])
-
-        return result
+        return pasific.intersection(atlantic)
 
 
