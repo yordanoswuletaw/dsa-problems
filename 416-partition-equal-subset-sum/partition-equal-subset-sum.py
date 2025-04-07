@@ -9,7 +9,7 @@ class Solution:
         def dp(indx, half_sum):
             if half_sum == 0:
                 return True
-            if indx == len(nums):
+            if indx == len(nums) or half_sum < 0:
                 return False
             
             if (indx, half_sum) in memo:
