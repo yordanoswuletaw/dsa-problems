@@ -1,5 +1,7 @@
 class Solution:
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
+
+        # Building the graph
         n = len(wordList)
         graph = defaultdict(list)
         for word in [beginWord] + wordList:
@@ -11,6 +13,7 @@ class Solution:
                 if diff == 1:
                     graph[word].append(nb)
         
+        # Tracking the shortest path 
         queue = deque([beginWord])
         visited = set()
         hash_table = defaultdict(set)
@@ -28,20 +31,22 @@ class Solution:
                     if nb not in visited:
                         hash_table[nb].add(word)
                         queue.append(nb)
+                    if nb == endWord:
+                        end_word_found = True
             step += 1
             if end_word_found:
                 break
-        print(step)
+
+        # Identifying the shortest path
         if endWord not in hash_table:
             return []
 
         transformations = []
         def dfs(word, seq, step):
-            if step <= 0:
+            if step < 0:
                 return 
             if word == beginWord:
-                if step == 1:
-                    transformations.append(seq.copy()[::-1])
+                transformations.append(seq.copy()[::-1])
                 return
             
             for nxt in hash_table[word]:
