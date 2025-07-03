@@ -15,9 +15,8 @@ class Solution:
                 if not heap:
                     break
                 _occ, _char = heapq.heappop(heap)
-                _needed = min(abs(_occ), 1)
-                _occ += _needed 
-                longest_string.extend([_char] * _needed)
+                _occ += 1 
+                longest_string.append(_char)
                 if _occ < 0:
                     heapq.heappush(heap, (_occ, _char))
             longest_string.extend([char] * needed)
