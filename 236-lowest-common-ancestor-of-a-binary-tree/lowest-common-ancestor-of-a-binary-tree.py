@@ -7,18 +7,45 @@
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        if not root:
-            return
-        if root is p:
-            return root
-        if root is q:
-            return root
         
-        left = self.lowestCommonAncestor(root.left, p, q)
-        right = self.lowestCommonAncestor(root.right, p, q)
-        if left and right:
-            return root
-        elif left:
-            return left
-        return right
+        def dfs(root, alarm1, alarm2):
+            if root is None:
+                return False
+                
+            count = 1 if root == alarm1 or root == alarm2 else 0
+            a = dfs(root.left, alarm1, alarm2)
+            if a is True:
+                count += 1
+            elif a:
+                return a
+            b = dfs(root.right, alarm1, alarm2)
+            if b is True:
+                count += 1
+            elif b:
+                return b
+
+            # for childAlarm in root.childAlarms:
+            #     result = dfs(childAlarm, alarm1, alarm2)
+            #     if result == True:
+            #         count += 1
+            #     elif result is CompositeAlarm:
+            #         return result
+            #     if count == 2:
+            #         break
+            
+            if count == 2:
+                return root 
+                
+            if count == 1:
+                return True
+                
+            return False
+        
+        result = dfs(root, p, q)
+        print(result)
+        if result is not True and result:
+            return result
+            
+        return None
+            
         
